@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% block contenido %}
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="row-fluid fondo">
+
+        </div>
+    </div>
+    <div class="container fondo-interior">
+        {% comment %}<h3>Población Ajustada a 30 de Junio de 2005: {{ population_initial }}</h3>{% endcomment %}
+        <div class="watch-container">
+            <div class="row-fluid">
+                <div class="current-population">
+                    <h1>POBLACIÓN DE PERÚ AHORA</h1>
+                </div>
+            </div>
+            <form id="population_form">{% csrf_token %}</form>
+            <div class="row-fluid">
+                <div id="feedback"></div>
+            </div>
+            <div class="row-fluid">
+                <div class="current-population">
+                    <h1 id="reloj"></h1>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block js %}
+<script type="text/javascript">
+    jQuery.noConflict();
+
+    function get_date(){
+        var fecha = new Date(),
+        hora = fecha.getHours(),
+        minuto = fecha.getMinutes(),
+        segundo = fecha.getSeconds();
+        var str_segundo = ''+segundo,
+            str_minuto = ''+minuto,
+            horario = '';
+
+        if (str_segundo.length === 1){
+            segundo = "0" + segundo;
+        }
+        if (str_minuto.length === 1){
+            minuto = "0" + minuto;
+        }
+        if (hora.length === 1){
+            hora = "0" + hora;
+        }
+        if(hora > 12){
+            horario = " PM";
+        }else{
+            horario = " AM";
+        }
+        if (hora > 12){
+            hora = hora - 12;
+        }
+        var str_fecha = " " + hora + " : " + minuto + " : " + segundo + horario;
+        $('reloj').update(str_fecha);
+        setTimeout("get_date()",1000);
+    }
+
+    document.observe('dom:loaded', function () {
+        var data = Form.serialize("population_form");
+        var oOptions = {
+            method: "POST",
+            parameters: data,
+            asynchronous: true,
+            frequency: 10,
+            decay: 1,
+            onFailure: function (oXHR) {
+                $('feedback').update(oXHR.statusText);
+            },
+            onLoading: function (oXHR) {
+                //$('feedback').update('Cargando ...');
+            },
+            onSuccess: function (t){
+                $('feedback').update(t.responseText);
+            }
+        };
+        new Ajax.PeriodicalUpdater('', "{% url 'population' %}", oOptions);
+        get_date();
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,40 @@
+body {
+    padding-top: 130px;
+    padding-bottom: 40px;
+    background-color: #EEEEEE!important;
+}
+
+.fondo {
+    background-image: url("../img/banner.jpg");
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-size: auto 138px;
+    height: 130px;
+}
+
+.fondo-interior{
+    height: 800px;
+    background-image: url("../img/fondo-regiones.jpg");
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+#feedback{
+    font-size: 120px;
+    color: #FFFFFF;
+    margin:0 auto 0 auto; width:590px;
+    padding: 50px;
+    height: 40px;
+}
+
+.current-population {
+    color: #FFFFFF;
+    text-align: center;
+    vertical-align: middle;
+    padding: 10px;
+}
+
+.watch-container{
+    margin-top: 220px;
+}
