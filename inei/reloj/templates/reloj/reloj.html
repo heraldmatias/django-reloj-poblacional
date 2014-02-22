@@ -75,7 +75,10 @@
                 //$('feedback').update('Cargando ...');
             },
             onSuccess: function (t){
-                $('feedback').update(t.responseText);
+                var n = parseInt(t.responseText).toFixed(0).replace(/./g, function(c, i, a) {
+                    return i && c !== "." && !((a.length - i) % 3) ? ',' + c : c;
+                });
+                $('feedback').update(n);
             }
         };
         new Ajax.PeriodicalUpdater('', "{% url 'population' %}", oOptions);
