@@ -39,5 +39,5 @@ class Api(object):
             duration = (end_date - START_DATE)
             seconds = (duration.microseconds + (duration.seconds + duration.days * 24 * 3600) * 10**6) / 10**6
             population = str(int(POPULATION + round((seconds/COUNTER), 1)))
-            return '{:20,}'.format(population)
+            return population
         return POPULATION
