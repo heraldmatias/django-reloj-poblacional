@@ -37,10 +37,7 @@ class Api(object):
         if self.year == YEAR:
             end_date = datetime.today()
             duration = (end_date - START_DATE)
-            if hasattr(duration, "total_seconds"):
-                seconds = duration.total_seconds()
-            else:
-                seconds = (duration.microseconds + (duration.seconds + duration.days * 24 * 3600) * 10**6) / 10**6
+            seconds = (duration.microseconds + (duration.seconds + duration.days * 24 * 3600) * 10**6) / 10**6
             population = int(POPULATION + round((seconds/COUNTER), 1))
             return '{:20,}'.format(population)
         return POPULATION
