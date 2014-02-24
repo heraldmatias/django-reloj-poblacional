@@ -12,9 +12,6 @@ var
 sdist
 develop-eggs
 .installed.cfg
-bootstrap.py
-buildout.cfg
-project
 
 # Installer logs
 pip-log.txt
