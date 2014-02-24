@@ -1,0 +1,7 @@
+.fondo-interior{
+    height: 800px;
+    background-image: url("../img/fondo-regiones-2.jpg");
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
