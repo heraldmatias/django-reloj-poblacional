@@ -28,9 +28,15 @@
 {% block js %}
 <script type="text/javascript">
     jQuery.noConflict();
-
+    var dias = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'],
+        meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Setiembre', 'Octubre', 'Noviembre', 'Diciembre'];
     function get_date(){
+
         var fecha = new Date(),
+        diasemana = fecha.getDay(),
+        dia = fecha.getDate(),
+        mes=fecha.getMonth(),
+        ano = fecha.getFullYear(),
         hora = fecha.getHours(),
         minuto = fecha.getMinutes(),
         segundo = fecha.getSeconds();
@@ -55,7 +61,7 @@
         if (hora > 12){
             hora = hora - 12;
         }
-        var str_fecha = " " + hora + " : " + minuto + " : " + segundo + horario;
+        var str_fecha = dias[diasemana]+ " " + dia + " de "+ meses[mes]+ " " + ano + "&nbsp;&nbsp;&nbsp;&nbsp;" + hora + " : " + minuto + " : " + segundo + horario;
         $('reloj').update(str_fecha);
         setTimeout("get_date()",1000);
     }
@@ -76,7 +82,7 @@
             },
             onSuccess: function (t){
                 var n = parseInt(t.responseText).toFixed(0).replace(/./g, function(c, i, a) {
-                    return i && c !== "." && !((a.length - i) % 3) ? ',' + c : c;
+                    return i && c !== "." && !((a.length - i) % 3) ? ' ' + c : c;
                 });
                 $('feedback').update(n);
             }
