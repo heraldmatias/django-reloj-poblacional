@@ -22,8 +22,8 @@ class PopulationView(TemplateView):
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
-        # if not request.is_ajax():
-        #     raise Http404("Only ajax.")
+        if not request.is_ajax():
+            raise Http404("Only ajax.")
         return super(PopulationView, self).dispatch(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
