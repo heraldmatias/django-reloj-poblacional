@@ -21,7 +21,7 @@ setup(
 
     packages=find_packages(),
 
-    install_requires=['setuptools', 'django'],
+    install_requires=['setuptools', 'django', 'pyfiglet'],
 
     classifiers=[
         'Development Status :: Production/Stable',
