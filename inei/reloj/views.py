@@ -27,7 +27,8 @@ class PopulationView(TemplateView):
         return super(PopulationView, self).dispatch(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-        api = Api(2014)
-        population = api.get_estimated_population()
-        response = HttpResponse(population, content_type="text/html")
+        # api = Api(2014)
+        # population = api.get_estimated_population()
+        # response = HttpResponse(population, content_type="text/html")
+        response = HttpResponse('ola k ace', content_type="text/html")
         return response
