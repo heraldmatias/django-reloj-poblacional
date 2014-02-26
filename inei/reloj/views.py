@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from django.views.generic import TemplateView
 from django.http.response import Http404, HttpResponse
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 from inei.reloj.api import Api
 from inei.reloj.constants import POPULATION
 
@@ -23,6 +25,7 @@ class PopulationView(TemplateView):
             raise Http404("Only ajax.")
         return super(PopulationView, self).dispatch(request, *args, **kwargs)
 
+    @method_decorator(csrf_exempt)
     def post(self, request, *args, **kwargs):
         api = Api(2014)
         population = api.get_estimated_population()
