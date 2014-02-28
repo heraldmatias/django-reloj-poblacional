@@ -30,6 +30,8 @@
     jQuery.noConflict();
     var dias = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'],
         meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Setiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+    var pu = null, counter = 0;
+
     function get_date(){
 
         var fecha = new Date(),
@@ -66,13 +68,14 @@
         setTimeout("get_date()",1000);
     }
 
-    document.observe('dom:loaded', function () {
+    function get_population(frecuency){
         var data = Form.serialize("population_form");
+
         var oOptions = {
             method: "POST",
             parameters: data,
             asynchronous: true,
-            frequency: 10,
+            frequency: frecuency,
             decay: 1,
             onFailure: function (oXHR) {
                 $('feedback').update(oXHR.statusText);
@@ -85,9 +88,19 @@
                     return i && c !== "." && !((a.length - i) % 3) ? ' ' + c : c;
                 });
                 $('feedback').update(n);
+                counter += 1;
+                if(pu && counter == 2){
+                    pu.stop();
+                    pu = null;
+                    get_population(93);
+                }
             }
         };
-        new Ajax.PeriodicalUpdater('', "{% url 'population' %}", oOptions);
+        pu = new Ajax.PeriodicalUpdater('', "{% url 'population' %}", oOptions);
+    }
+
+    document.observe('dom:loaded', function () {
+        get_population({{ elapsed_time }});
         get_date();
     });
 </script>

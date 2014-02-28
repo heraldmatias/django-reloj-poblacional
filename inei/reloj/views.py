@@ -14,7 +14,9 @@ class IndexView(TemplateView):
 
     def get_context_data(self, **kwargs):
         ctx = super(IndexView, self).get_context_data(*kwargs)
+        api = Api(2014)
         ctx['population_initial'] = POPULATION
+        ctx['elapsed_time'] = api.get_elapsed_time()
         return ctx
 
 

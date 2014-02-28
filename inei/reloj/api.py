@@ -41,3 +41,16 @@ class Api(object):
             population = str(int(POPULATION + round((seconds/COUNTER), 1)))
             return population
         return POPULATION
+
+    def get_elapsed_time(self):
+        if self.year == YEAR:
+            end_date = datetime.today()
+            duration = (end_date - START_DATE)
+            seconds = (duration.microseconds + (duration.seconds + duration.days * 24 * 3600) * 10**6) / 10**6
+            initial_seconds = seconds
+            population = seconds/COUNTER
+            next_population = population + 1
+            while population != next_population:
+                seconds += 1
+                population = seconds/COUNTER
+            return seconds - initial_seconds
