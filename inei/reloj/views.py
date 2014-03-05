@@ -4,7 +4,7 @@ from django.views.generic import TemplateView
 from django.http.response import Http404, HttpResponse
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
-from inei.reloj.api import Api
+from inei.reloj.api import Api, intWith
 from inei.reloj.constants import POPULATION
 
 __author__ = 'holivares'
@@ -16,7 +16,7 @@ class IndexView(TemplateView):
     def get_context_data(self, **kwargs):
         ctx = super(IndexView, self).get_context_data(*kwargs)
         api = Api(2014)
-        ctx['population_initial'] = POPULATION
+        ctx['population_initial'] = intWith(' ', POPULATION)
         ctx['elapsed_time'] = api.get_elapsed_time()
         return ctx
 
@@ -33,7 +33,7 @@ class PopulationView(TemplateView):
         api = Api(2014)
         data = {
             'elapsed_time': api.get_elapsed_time(),
-            'population': api.get_estimated_population(),
+            'population': intWith(' ', api.get_estimated_population()),
             'success': True
         }
         response = HttpResponse(json.dumps(data), content_type="application/json")
@@ -43,7 +43,7 @@ class PopulationView(TemplateView):
         api = Api(2014)
         data = {
             'elapsed_time': api.get_elapsed_time(),
-            'population': api.get_estimated_population(),
+            'population': intWith(' ', api.get_estimated_population()),
             'success': True
         }
         response = HttpResponse(json.dumps(data), content_type="application/json")

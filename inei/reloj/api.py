@@ -5,27 +5,17 @@ __author__ = 'holivares'
 
 from constants import *
 
-# CREATE PROCEDURE [dbo].[SP_ACTUALIZA_POBLACION]
-# @anio integer
-# AS
-#
-# declare @vfecha_ini datetime
-# declare @vfecha_fin datetime
-# declare @vsumador bigint
-# declare @vpoblacion_ini bigint
-# declare @vpoblacion_fin bigint
-# declare @contador integer
-#
-# if (@anio=2014) begin
-# set @contador=193
-# set @vpoblacion_ini=30151500
-# set @vfecha_ini=convert(datetime,'31-01-2014 00:00:00.000')
-# set @vfecha_fin=getdate()
-# set @vsumador=CAST(DATEDIFF(second,@vfecha_ini,@vfecha_fin) as integer)
-# set @vpoblacion_fin=@vpoblacion_ini+ROUND(@vsumador/@contador, 0, 1)
-# end
-# --select @vpoblacion_fin
-# GO
+
+def intWith(character, x):
+    if type(x) not in [type(0), type(0L)]:
+        raise TypeError("Parameter must be an integer.")
+    if x < 0:
+        return '-' + intWith(character, -x)
+    result = ''
+    while x >= 1000:
+        x, r = divmod(x, 1000)
+        result = "%s%03d%s" % (character, r, result)
+    return "%d%s" % (x, result)
 
 
 class Api(object):
@@ -38,7 +28,7 @@ class Api(object):
             end_date = datetime.today()
             duration = (end_date - START_DATE)
             seconds = (duration.microseconds + (duration.seconds + duration.days * 24 * 3600) * 10**6) / 10**6
-            population = str(int(POPULATION + round((seconds/COUNTER), 1)))
+            population = int(POPULATION + round((seconds/COUNTER), 1))
             return population
         return POPULATION
 
